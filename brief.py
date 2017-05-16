@@ -5,13 +5,15 @@ from skimage.feature import (match_descriptors, corner_peaks, corner_harris,
 from skimage.color import rgb2gray
 import matplotlib.pyplot as plt
 import numpy as np
+import cv2
 from skimage.filters import gaussian
+from scipy.ndimage import gaussian_filter
 from skimage.util.dtype import img_as_bool
 
 
 class ModBrief:
 
-    def __init__(self, descriptor_size=256, patch_size=63, sigma=1.):
+    def __init__(self, descriptor_size=128, patch_size=32, sigma=1.):
         self.descriptor_size = descriptor_size
         self.patch_size = patch_size
         self.sigma = sigma
@@ -20,7 +22,9 @@ class ModBrief:
 
     def extract(self, image, keypoints, safemode=True):
 
+        # image = np.squeeze(image)
         image = gaussian(image, self.sigma)
+        # image = np.ascontiguousarray(gaussian_filter(image, self.sigma))
 
         #
         # get random (normal distribution) relative points
@@ -62,21 +66,21 @@ class ModBrief:
                 else:
                     temp = False
                 self.descriptors[y, x] = temp
-        print("dupa")
 
 
-
-    def compare(self, desc0, desc1):
-        matches = match_descriptors(descriptors1, descriptors2, cross_check=True)
-        return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
-
+def compare_brief(desc0, desc1):
+    matches = match_descriptors(desc0, desc1, cross_check=True)
+    return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
 
 
-img1 = rgb2gray(data.rocket())
+# 'samples/bikes/00004.png'
+# 'samples/raw/bikes/img1.ppm'
+img1 = rgb2gray(cv2.imread('samples/bikes/00004.png', 0))
 
 tform = tf.AffineTransform(scale=(1.8, 1.2), translation=(0, -100))
 img2 = tf.warp(img1, tform)
-img3 = tf.rotate(img1, 55)
+img2 = rgb2gray(cv2.imread('samples/bikes/00004.png', 0))
+img3 = tf.rotate(img2, 25)
 
 # img2 = rgb2gray(data.hubble_deep_field())
 
@@ -85,7 +89,9 @@ keypoints2 = corner_peaks(corner_harris(img2), min_distance=5)
 keypoints3 = corner_peaks(corner_harris(img3), min_distance=5)
 
 
-extractor = ModBrief()
+
+
+#extractor = ModBrief()
 extractor = BRIEF()
 
 
@@ -127,4 +133,6 @@ plot_matches(ax[1], img1, img3, keypoints1, keypoints3, matches13, matches_color
 ax[1].axis('off')
 ax[1].set_title("Original Image vs. Transformed Image")
 
+print(compare_brief(descriptors1, descriptors2))
+print(compare_brief(descriptors1, descriptors3))
 plt.show()
