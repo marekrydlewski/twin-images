@@ -13,18 +13,18 @@ def extract_bright(image, keypoints):
     descriptors = []
     for keypoint in keypoints:
         subimage = image[max(keypoint[0] - window, 0): min(keypoint[0] + window, image.shape[0])][max(keypoint[1] - window, 0): min(keypoint[1] + window, image.shape[1])]
-        squeezed = np.squeeze(subimage)
+        # squeezed = np.squeeze(subimage)
         descriptors.append((np.std(subimage), np.average(subimage)))
     return descriptors
 
 
 def distance_bright(descriptor1, descriptor2):
-    return abs(descriptor1[0] - descriptor2[0]) + abs(descriptor1[1] - descriptor2[1])
+    return 4 *(abs(descriptor1[0] - descriptor2[0]) + 3 * abs(descriptor1[1] - descriptor2[1]))
 
 
 # same object, different images
-img1 = rgb2gray(cv2.imread('samples/bikes/00004.png', 0))
-img2 = rgb2gray(cv2.imread('samples/bikes/00005.png', 0))
+img1 = rgb2gray(cv2.imread('samples/bikes/00216.png', 0))
+img2 = rgb2gray(cv2.imread('samples/bikes/00217.png', 0))
 
 # different objects
 img3 = rgb2gray(cv2.imread('samples/bikes/00030.png', 0))
