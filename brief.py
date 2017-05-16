@@ -13,7 +13,7 @@ from skimage.util.dtype import img_as_bool
 
 class ModBrief:
 
-    def __init__(self, descriptor_size=256, patch_size=63, sigma=1.):
+    def __init__(self, descriptor_size=128, patch_size=32, sigma=1.):
         self.descriptor_size = descriptor_size
         self.patch_size = patch_size
         self.sigma = sigma
@@ -75,11 +75,11 @@ def compare_brief(desc0, desc1):
 
 # 'samples/bikes/00004.png'
 # 'samples/raw/bikes/img1.ppm'
-img1 = rgb2gray(cv2.imread('samples/raw/bikes/img1.ppm', 0))
+img1 = rgb2gray(cv2.imread('samples/bikes/00004.png', 0))
 
 tform = tf.AffineTransform(scale=(1.8, 1.2), translation=(0, -100))
 img2 = tf.warp(img1, tform)
-img2 = rgb2gray(cv2.imread('samples/raw/bikes/img3.ppm', 0))
+img2 = rgb2gray(cv2.imread('samples/bikes/00004.png', 0))
 img3 = tf.rotate(img2, 25)
 
 # img2 = rgb2gray(data.hubble_deep_field())
@@ -87,6 +87,8 @@ img3 = tf.rotate(img2, 25)
 keypoints1 = corner_peaks(corner_harris(img1), min_distance=5)
 keypoints2 = corner_peaks(corner_harris(img2), min_distance=5)
 keypoints3 = corner_peaks(corner_harris(img3), min_distance=5)
+
+
 
 
 #extractor = ModBrief()
