@@ -1,8 +1,21 @@
 # http://www.cs.put.poznan.pl/bwieloch/?page_id=653
 from sklearn.metrics import roc_auc_score
+import brief
+import bright
+import gradient
+
 
 def extract(image, keypoints):
-    pass
+    extractor_brief = brief.ModBrief()
+    briefs = extractor_brief.extract(image)
+
+    brights_histos = bright.extract_bright_and_hist(image)
+    brights = brights_histos[0:2]
+    histos = brights_histos[2]
+
+    extractor_gradients = gradient.GradientDesc()
+    gradients = extractor_gradients.extract(image)
+    return zip(briefs, brights, histos, gradients)
 
 
 def distance(descriptor1, descriptor2):
