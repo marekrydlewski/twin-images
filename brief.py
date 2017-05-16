@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 from skimage.filters import gaussian
-from scipy.ndimage import gaussian_filter
+from scipy.spatial.distance import hamming
 from skimage.util.dtype import img_as_bool
 
 
@@ -69,8 +69,12 @@ class ModBrief:
 
 
 def compare_brief(desc0, desc1):
+    if desc0.shape[0] == 1 and desc1.shape[0] == 1:
+        return hamming(desc0, desc1)
     matches = match_descriptors(desc0, desc1, cross_check=True)
     return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
+
+
 
 
 # 'samples/bikes/00004.png'
@@ -112,6 +116,7 @@ descriptors3 = extractor.descriptors
 matches12 = match_descriptors(descriptors1, descriptors2, cross_check=True)
 matches13 = match_descriptors(descriptors1, descriptors3, cross_check=True)
 
+print(compare_brief(descriptors1, descriptors2))
 
 print(descriptors1.shape[0])
 print(descriptors2.shape[0])
