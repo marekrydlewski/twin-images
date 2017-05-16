@@ -67,17 +67,18 @@ class ModBrief:
 
 
     def compare(self, desc0, desc1):
-        pass
+        matches = match_descriptors(descriptors1, descriptors2, cross_check=True)
+        return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
 
 
 
-#img1 = rgb2gray(data.astronaut())
-img1 = rgb2gray(data.horse())
+img1 = rgb2gray(data.rocket())
 
-tform = tf.AffineTransform(scale=(1.2, 1.2), translation=(0, -100))
+tform = tf.AffineTransform(scale=(1.8, 1.2), translation=(0, -100))
 img2 = tf.warp(img1, tform)
-img2 = rgb2gray(data.camera())
-img3 = tf.rotate(img1, 25)
+img3 = tf.rotate(img1, 55)
+
+# img2 = rgb2gray(data.hubble_deep_field())
 
 keypoints1 = corner_peaks(corner_harris(img1), min_distance=5)
 keypoints2 = corner_peaks(corner_harris(img2), min_distance=5)
@@ -85,9 +86,7 @@ keypoints3 = corner_peaks(corner_harris(img3), min_distance=5)
 
 
 extractor = ModBrief()
-#extractor.extract(img2, keypoints2)
-
-# extractor = BRIEF()
+extractor = BRIEF()
 
 
 extractor.extract(img1, keypoints1)
@@ -104,6 +103,13 @@ descriptors3 = extractor.descriptors
 
 matches12 = match_descriptors(descriptors1, descriptors2, cross_check=True)
 matches13 = match_descriptors(descriptors1, descriptors3, cross_check=True)
+
+
+print(descriptors1.shape[0])
+print(descriptors2.shape[0])
+print(descriptors3.shape[0])
+print(matches12.shape[0])
+print(matches13.shape[0])
 
 # matches12 = match_descriptors(descriptors1, descriptors2, cross_check=True, metric='sqeuclidean')
 # matches13 = match_descriptors(descriptors1, descriptors3, cross_check=True, metric='hamming')
