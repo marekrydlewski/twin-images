@@ -67,7 +67,7 @@ class ModBrief:
 
 
     def compare(self, desc0, desc1):
-        matches = match_descriptors(descriptors1, descriptors2, cross_check=True)
+        matches = match_descriptors(desc0, desc1, cross_check=True)
         return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
 
 
@@ -86,7 +86,7 @@ keypoints3 = corner_peaks(corner_harris(img3), min_distance=5)
 
 
 extractor = ModBrief()
-extractor = BRIEF()
+#extractor = BRIEF()
 
 
 extractor.extract(img1, keypoints1)
@@ -127,4 +127,6 @@ plot_matches(ax[1], img1, img3, keypoints1, keypoints3, matches13, matches_color
 ax[1].axis('off')
 ax[1].set_title("Original Image vs. Transformed Image")
 
+print(extractor.compare(descriptors1, descriptors1))
+print(extractor.compare(descriptors1, descriptors3))
 plt.show()
