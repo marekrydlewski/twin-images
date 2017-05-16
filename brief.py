@@ -116,13 +116,11 @@ descriptors3 = extractor.descriptors
 matches12 = match_descriptors(descriptors1, descriptors2, cross_check=True)
 matches13 = match_descriptors(descriptors1, descriptors3, cross_check=True)
 
-print(compare_brief(descriptors1, descriptors2))
-
-print(descriptors1.shape[0])
-print(descriptors2.shape[0])
-print(descriptors3.shape[0])
-print(matches12.shape[0])
-print(matches13.shape[0])
+# print(descriptors1.shape[0])
+# print(descriptors2.shape[0])
+# print(descriptors3.shape[0])
+# print(matches12.shape[0])
+# print(matches13.shape[0])
 
 # matches12 = match_descriptors(descriptors1, descriptors2, cross_check=True, metric='sqeuclidean')
 # matches13 = match_descriptors(descriptors1, descriptors3, cross_check=True, metric='hamming')

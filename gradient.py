@@ -141,8 +141,10 @@ t11 = extractor.compareDescriptors(descriptors1[0], descriptors1[0])
 t12 = extractor.compareDescriptors(descriptors1[0], descriptors2[0])
 t13 = extractor.compareDescriptors(descriptors1[0], descriptors3[0])
 t23 = extractor.compareDescriptors(descriptors3[0], descriptors2[0])
-
-
+print(t11)
+print(t12)
+print(t13)
+print(t23)
 matches12 = match_descriptors(descriptors1, descriptors2, cross_check=True)
 matches13 = match_descriptors(descriptors1, descriptors3, cross_check=True)
 
