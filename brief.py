@@ -79,16 +79,18 @@ img1 = rgb2gray(cv2.imread('samples/bikes/00004.png', 0))
 
 tform = tf.AffineTransform(scale=(1.8, 1.2), translation=(0, -100))
 img2 = tf.warp(img1, tform)
-img2 = rgb2gray(cv2.imread('samples/bikes/00004.png', 0))
+img2 = rgb2gray(cv2.imread('samples/bikes/00005.png', 0))
 img3 = tf.rotate(img2, 25)
 
 # img2 = rgb2gray(data.hubble_deep_field())
 
-keypoints1 = corner_peaks(corner_harris(img1), min_distance=5)
-keypoints2 = corner_peaks(corner_harris(img2), min_distance=5)
-keypoints3 = corner_peaks(corner_harris(img3), min_distance=5)
+#keypoints1 = corner_peaks(corner_harris(img1), min_distance=5)
+#keypoints2 = corner_peaks(corner_harris(img2), min_distance=5)
+#keypoints3 = corner_peaks(corner_harris(img3), min_distance=5)
 
-
+keypoints1 = np.array([[32, 32], [20, 40], [25, 42]])
+keypoints2 = np.array([[32, 32], [20, 40], [25, 42]])
+keypoints3 = np.array([[32, 32], [20, 40], [25, 42]])
 
 
 #extractor = ModBrief()
