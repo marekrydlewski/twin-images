@@ -25,5 +25,9 @@ def distance(desc0, desc1):
     r3 = distance_histogram(desc0.bright[0], desc1.bright[0])
     r4 = grad.compare(desc0.gradient[0], desc1.gradient[0])
     result = (r1 * 2. + r2 * 2. + r3 * 2. + r4) / 7.
+    if result < 0.05:
+        return 0.
+    elif result > 0.95:
+        return 1.
     return result
 
