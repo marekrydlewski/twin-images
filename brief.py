@@ -97,8 +97,8 @@ keypoints2 = np.array([[32, 32], [20, 40], [25, 42]])
 keypoints3 = np.array([[32, 32], [20, 40], [25, 42]])
 
 
-#extractor = ModBrief()
-extractor = BRIEF()
+extractor = ModBrief()
+#extractor = BRIEF()
 
 
 extractor.extract(img1, keypoints1)
