@@ -28,45 +28,45 @@ def distance_bright(descriptor1, descriptor2):
 def distance_histogram(descriptor1, descriptor2):
     return 1 - abs(cv2.compareHist(descriptor1[2], descriptor2[2], cv2.HISTCMP_CORREL))
 
+if __name__ == "__main__":
+    # same object, different images
+    img1 = rgb2gray(cv2.imread('samples/bikes/00216.png', 0))
+    img2 = rgb2gray(cv2.imread('samples/bikes/00217.png', 0))
 
-# same object, different images
-img1 = rgb2gray(cv2.imread('samples/bikes/00216.png', 0))
-img2 = rgb2gray(cv2.imread('samples/bikes/00217.png', 0))
+    # different objects
+    img3 = rgb2gray(cv2.imread('samples/bikes/00030.png', 0))
+    img4 = rgb2gray(cv2.imread('samples/bikes/00079.png', 0))
 
-# different objects
-img3 = rgb2gray(cv2.imread('samples/bikes/00030.png', 0))
-img4 = rgb2gray(cv2.imread('samples/bikes/00079.png', 0))
+    keypoints_own = [[32, 32], [20, 40], [25, 42]]
 
-keypoints_own = [[32, 32], [20, 40], [25, 42]]
+    desc1 = extract_bright_and_hist(img1, keypoints_own)
+    desc2 = extract_bright_and_hist(img2, keypoints_own)
+    score = distance_bright(desc1[0], desc2[0])
+    score1 = distance_bright(desc1[1], desc2[1])
+    score2 = distance_bright(desc1[2], desc2[2])
+    print(score)
+    print(score1)
+    print(score2)
 
-desc1 = extract_bright_and_hist(img1, keypoints_own)
-desc2 = extract_bright_and_hist(img2, keypoints_own)
-score = distance_bright(desc1[0], desc2[0])
-score1 = distance_bright(desc1[1], desc2[1])
-score2 = distance_bright(desc1[2], desc2[2])
-print(score)
-print(score1)
-print(score2)
+    desc3 = extract_bright_and_hist(img3, keypoints_own)
+    desc4 = extract_bright_and_hist(img4, keypoints_own)
+    score3 = distance_bright(desc1[0], desc4[0])
+    score4 = distance_bright(desc1[1], desc4[1])
+    score5 = distance_bright(desc1[2], desc4[2])
+    print(score3)
+    print(score4)
+    print(score5)
 
-desc3 = extract_bright_and_hist(img3, keypoints_own)
-desc4 = extract_bright_and_hist(img4, keypoints_own)
-score3 = distance_bright(desc1[0], desc4[0])
-score4 = distance_bright(desc1[1], desc4[1])
-score5 = distance_bright(desc1[2], desc4[2])
-print(score3)
-print(score4)
-print(score5)
+    score = distance_histogram(desc1[0], desc2[0])
+    score1 = distance_histogram(desc1[1], desc2[1])
+    score2 = distance_histogram(desc1[2], desc2[2])
+    print(score)
+    print(score1)
+    print(score2)
 
-score = distance_histogram(desc1[0], desc2[0])
-score1 = distance_histogram(desc1[1], desc2[1])
-score2 = distance_histogram(desc1[2], desc2[2])
-print(score)
-print(score1)
-print(score2)
-
-score3 = distance_histogram(desc1[0], desc4[0])
-score4 = distance_histogram(desc1[1], desc4[1])
-score5 = distance_histogram(desc1[2], desc4[2])
-print(score3)
-print(score4)
-print(score5)
+    score3 = distance_histogram(desc1[0], desc4[0])
+    score4 = distance_histogram(desc1[1], desc4[1])
+    score5 = distance_histogram(desc1[2], desc4[2])
+    print(score3)
+    print(score4)
+    print(score5)
