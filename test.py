@@ -1,5 +1,7 @@
 from sklearn.metrics import roc_auc_score
-from main import *
+from skimage.color import rgb2gray
+import cv2
+import main
 
 
 def test(extract, compare, keypoints1, keypoints2):
@@ -27,5 +29,5 @@ def test(extract, compare, keypoints1, keypoints2):
 
     return y_true, y_scores
 
-a, b = test(extract, distance, [(32,32)], [(32,32)])
+a, b = test(main.extract, main.distance, [(32,32)], [(32,32)])
 print(roc_auc_score(a, b))
