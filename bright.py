@@ -12,7 +12,7 @@ def extract_bright_and_hist(image, keypoints):
     for keypoint in keypoints:
         subimage = image[max(keypoint[0] - window, 0): min(keypoint[0] + window, image.shape[0])][
                    max(keypoint[1] - window, 0): min(keypoint[1] + window, image.shape[1])]
-        hist, bins = np.histogram(subimage, bins=20, range=(0.0, 1.0))
+        hist, bins = np.histogram(subimage, bins=10, range=(0.0, 1.0))
         descriptors.append((np.std(subimage), np.average(subimage), hist.ravel().astype('float32')))
     return descriptors
 
