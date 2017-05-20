@@ -30,4 +30,11 @@ def test(extract, compare, keypoints1, keypoints2):
     return y_true, y_scores
 
 a, b = test(main.extract, main.distance, [(32,32)], [(32,32)])
+
+for threshold in range(10, 90, 5):
+    temp = [1 if x < threshold / 100 else 0 for x in b[:350]]
+    temp2 = [0 if x < threshold / 100 else 1 for x in b[350:]]
+    asd = temp.count(1) / 350
+    qwe = temp2.count(1) / 350
+    print(threshold.__str__() + " : pos =  " + asd.__str__()+ "; neg = "+qwe.__str__())
 print(roc_auc_score(a, b))

@@ -2,7 +2,6 @@ from brief import ModBrief
 from bright import *
 from gradient import GradientDesc
 
-
 class Descriptor:
     def __init__(self, brief, bright, gradient):
         self.brief = brief
@@ -12,6 +11,7 @@ class Descriptor:
 
 def extract(image, keypoints):
     brief = ModBrief()
+
     briefs = brief.extract(image, np.array(keypoints))
 
     brights = extract_bright_and_hist(image, keypoints)
@@ -26,11 +26,11 @@ def extract(image, keypoints):
 def distance(desc0, desc1):
     brief = ModBrief()
     grad = GradientDesc()
-    # r1 = brief.compare(desc0[0].brief, desc1[0].brief)
+    r1 = brief.compare(desc0[0].brief, desc1[0].brief)
     r2 = distance_bright(desc0[0].bright, desc1[0].bright)
     r3 = distance_histogram(desc0[0].bright, desc1[0].bright)
     r4 = grad.compare(desc0[0].gradient, desc1[0].gradient)
-    result = (r2 * 2. + r3 * 2. + r4) / 5.
+    result = (r1 + r2 * 2. + r3 * 2. + r4) / 6.
     if result < 0.05:
         return 0.
     elif result > 0.95:
