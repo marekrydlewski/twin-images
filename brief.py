@@ -18,8 +18,9 @@ class ModBrief:
         #
         # get random (normal distribution) relative points
         #
-        gaussian_val = 1. / 5. * self.patch_size
-        samples = np.random.normal(0, gaussian_val, self.descriptor_size * 8)
+        random = np.random.RandomState()
+        random.seed(1)
+        samples = (self.patch_size / 5.) * random.randn(self.descriptor_size * 8)
         samples = np.array(samples, dtype=np.int32)
         samples = samples[(samples < (self.patch_size // 2)) & (samples > - (self.patch_size - 2) // 2)]
         p1 = samples[: self.descriptor_size * 2].reshape(self.descriptor_size, 2)
@@ -49,7 +50,7 @@ class ModBrief:
                 kc = keypoints[y, 1]
                 pointX = image[kr + pr0, kc + pc0]
                 pointY = image[kr + pr1, kc + pc1]
-                temp = 0
+                temp = None
                 if pointX > pointY:
                     temp = True
                 else:
@@ -59,8 +60,9 @@ class ModBrief:
 
 
     def compare(self, desc0, desc1):
-        if desc0.shape[0] == 1 and desc1.shape[0] == 1:
-            return hamming(desc0, desc1)
-        matches = match_descriptors(desc0, desc1, cross_check=True)
-        return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
+        return  hamming(desc0, desc1)
+        # if desc0.shape[0] == 1 and desc1.shape[0] == 1:
+        #     return hamming(desc0, desc1)
+        # matches = match_descriptors(desc0, desc1, cross_check=True)
+        # return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
 
