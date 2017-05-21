@@ -1,7 +1,7 @@
 from sklearn.metrics import roc_auc_score
 from skimage.color import rgb2gray
 import cv2
-import main
+import descriptor
 
 
 def test(extract, compare, keypoints1, keypoints2):
@@ -15,7 +15,7 @@ def test(extract, compare, keypoints1, keypoints2):
         desc2 = extract(img2, keypoints2)
 
         y_true.append(0)
-        y_scores.append(compare(desc1, desc2))
+        y_scores.append(compare(desc1[0], desc2[0]))
 
     for i in range(1, 350):
         img1 = rgb2gray(cv2.imread('test/negative-p' + str(i) + '-1.png', 0))
@@ -25,11 +25,11 @@ def test(extract, compare, keypoints1, keypoints2):
         desc2 = extract(img2, keypoints2)
 
         y_true.append(1)
-        y_scores.append(compare(desc1, desc2))
+        y_scores.append(compare(desc1[0], desc2[0]))
 
     return y_true, y_scores
 
-a, b = test(main.extract, main.distance, [(32,32)], [(32,32)])
+a, b = test(descriptor.extract, descriptor.distance, [(32, 32)], [(32, 32)])
 
 for threshold in range(10, 90, 5):
     temp = [1 if x < threshold / 100 else 0 for x in b[:350]]
