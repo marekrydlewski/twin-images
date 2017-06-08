@@ -29,6 +29,9 @@ def test(extract, compare, keypoints1, keypoints2):
 
     return y_true, y_scores
 
+x_large_image = descriptor.extract(cv2.imread('large/negative-p0-1.png'), [(70, 52), (92, 32)])
+y_large_image = descriptor.extract(cv2.imread('large/negative-p0-2.png'), [(70, 52), (92, 32)])
+dis_large = descriptor.distance(x_large_image[0], y_large_image[0])
 
 a, b = test(descriptor.extract, descriptor.distance, [(32, 32)], [(32, 32)])
 
