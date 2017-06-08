@@ -5,7 +5,6 @@ from scipy.spatial.distance import hamming
 
 
 class ModBrief:
-
     def __init__(self, descriptor_size=128, patch_size=32, sigma=1.):
         self.descriptor_size = descriptor_size
         self.patch_size = patch_size
@@ -24,7 +23,7 @@ class ModBrief:
         samples = np.array(samples, dtype=np.int32)
         samples = samples[(samples < (self.patch_size // 2)) & (samples > - (self.patch_size - 2) // 2)]
         p1 = samples[: self.descriptor_size * 2].reshape(self.descriptor_size, 2)
-        p2 = samples[self.descriptor_size*2:self.descriptor_size*4].reshape(self.descriptor_size, 2)
+        p2 = samples[self.descriptor_size * 2:self.descriptor_size * 4].reshape(self.descriptor_size, 2)
         #
         # safemode disable points too close to border
         #
@@ -32,9 +31,10 @@ class ModBrief:
         if safemode:
             distance = self.patch_size // 2
             for point in range(keypoints.shape[0]):
-                if keypoints[point, 0] < distance or keypoints[point, 0] > image.shape[0] - distance or keypoints[point, 1] < distance or keypoints[point, 1] > image.shape[1] - distance:
+                if keypoints[point, 0] < distance or keypoints[point, 0] > image.shape[0] - distance or keypoints[
+                    point, 1] < distance or keypoints[point, 1] > image.shape[1] - distance:
                     self.mask[point] = False
-            keypoints = np.array(keypoints[self.mask,:], dtype=np.int32,)#1 order='C', copy=False)
+            keypoints = np.array(keypoints[self.mask, :], dtype=np.int32, )  # 1 order='C', copy=False)
         self.descriptors = np.zeros((keypoints.shape[0], self.descriptor_size), dtype=float, order='C')
         #
         # compute distance function
@@ -58,11 +58,9 @@ class ModBrief:
                 self.descriptors[y, x] = temp
         return self.descriptors
 
-
     def compare(self, desc0, desc1):
         return hamming(desc0, desc1)
         # if desc0.shape[0] == 1 and desc1.shape[0] == 1:
         #     return hamming(desc0, desc1)
         # matches = match_descriptors(desc0, desc1, cross_check=True)
         # return 1. - 2. * float(matches.shape[0]) / float(desc0.shape[0] + desc1.shape[0])
-

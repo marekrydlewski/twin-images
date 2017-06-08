@@ -30,6 +30,10 @@ def test(extract, compare, keypoints1, keypoints2):
 
     return y_true, y_scores
 
+x_large_image = descriptor.extract(rgb2gray(cv2.imread('large/negative-p0-1.png', 0)), [(70, 31), (92, 31)])
+y_large_image = descriptor.extract(rgb2gray(cv2.imread('large/negative-p0-2.png', 0)), [(70, 31), (92, 31)])
+dis_large = descriptor.distance(x_large_image[0], y_large_image[0])
+
 a, b = test(descriptor.extract, descriptor.distance, np.array([[32, 32], [12, 15], [28, 27]]), np.array([[32, 32], [12, 15], [28, 27]]))
 
 for threshold in range(10, 90, 5):
@@ -37,5 +41,5 @@ for threshold in range(10, 90, 5):
     temp2 = [0 if x < threshold / 100 else 1 for x in b[350:]]
     asd = temp.count(1) / 350
     qwe = temp2.count(1) / 350
-    print(threshold.__str__() + " : pos =  " + asd.__str__()+ "; neg = "+qwe.__str__())
+    print(threshold.__str__() + " : pos =  " + asd.__str__() + "; neg = " + qwe.__str__())
 print(roc_auc_score(a, b))

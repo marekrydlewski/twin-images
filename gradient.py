@@ -19,7 +19,7 @@ class GradientDesc():
                 (1, -1), (0, -1), (-1, -1)
                 ]
         for a in range(8):
-            result[a] = float(image[x + mask[a][0], y + mask[a][1]]) - float(image[x][y])
+            result[a] = float(image[x + mask[a][0], y + mask[a][1]]) - float(image[x, y])
 
         return result
 
