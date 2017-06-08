@@ -60,7 +60,7 @@ class ModBrief:
 
 
     def compare(self, desc0, desc1):
-        return  hamming(desc0, desc1)
+        return hamming(desc0, desc1)
         # if desc0.shape[0] == 1 and desc1.shape[0] == 1:
         #     return hamming(desc0, desc1)
         # matches = match_descriptors(desc0, desc1, cross_check=True)

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.distance import euclidean
 
+
 class GradientDesc():
     def __init__(self):
         self.smallBlockSize = 14
@@ -31,7 +32,7 @@ class GradientDesc():
     def is_feature(self, histogram):
         result = 0
         for x in range(0, 4):
-            if np.sign(histogram[x]) == np.sign(histogram[x-4]):
+            if np.sign(histogram[x]) == np.sign(histogram[x - 4]):
                 result += 1
         return result
 
@@ -41,7 +42,8 @@ class GradientDesc():
             distance = 2 * self.smallBlockSize + 1
             maxX = image.shape[0]
             maxY = image.shape[1]
-            if point[0] - distance < 0 or point[0] + distance >= maxX or point[1] - distance < 0 or point[1] + distance >= maxY:
+            if point[0] - distance < 0 or point[0] + distance >= maxX or point[1] - distance < 0 or point[
+                1] + distance >= maxY:
                 return []
 
         result = []
