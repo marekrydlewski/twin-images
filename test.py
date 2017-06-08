@@ -1,6 +1,7 @@
 from sklearn.metrics import roc_auc_score
 from skimage.color import rgb2gray
 import cv2
+import numpy as np
 import descriptor
 
 
@@ -33,7 +34,7 @@ x_large_image = descriptor.extract(cv2.imread('large/negative-p0-1.png'), [(70, 
 y_large_image = descriptor.extract(cv2.imread('large/negative-p0-2.png'), [(70, 52), (92, 32)])
 dis_large = descriptor.distance(x_large_image[0], y_large_image[0])
 
-a, b = test(descriptor.extract, descriptor.distance, [(32, 32)], [(32, 32)])
+a, b = test(descriptor.extract, descriptor.distance, np.array([[32, 32], [12, 15], [28, 27]]), np.array([[32, 32], [12, 15], [28, 27]]))
 
 for threshold in range(10, 90, 5):
     temp = [1 if x < threshold / 100 else 0 for x in b[:350]]
