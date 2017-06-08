@@ -9,7 +9,7 @@ class GradientDesc():
     def __init__(self):
         self.smallBlockSize = 14
         self.maxWindowSize = 64
-        self.patch = self.maxWindowSize // 2 - 1
+        self.patch = 30
 
     def computePoint(self, image, x, y):
         result = np.zeros(8)
@@ -50,7 +50,7 @@ class GradientDesc():
         for x in range(-self.patch, self.patch):
             for y in range(-self.patch, self.patch):
                 new_x = point[0] + x
-                new_y = point[0] + y
+                new_y = point[1] + y
                 result.append(self.is_feature(self.computePoint(image, new_x, new_y)))
 
         descriptor = np.zeros(5)
